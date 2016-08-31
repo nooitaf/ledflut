@@ -1,5 +1,8 @@
 # ledflut
+
 [pixelflut](https://github.com/defnull/pixelflut) clone using nodemcu, ledstrips, artnet and nodejs
+
+<img src="http://imgur.com/b9TvLFA.jpg" alt="screenshot.jpg"> 
 
 `server.js` bridges pixelflut command to artnet
 `/examples` pixelflut command generator examples
