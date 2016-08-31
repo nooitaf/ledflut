@@ -1,9 +1,9 @@
 # ledflut
 [pixelflut](https://github.com/defnull/pixelflut) clone using nodemcu, ledstrips, artnet and nodejs
 
-`server.js` bridges pixelflut command to artnet
-`/examples` pixelflut command generator examples
-`/esp` nodemcu examples
+`server.js` bridges pixelflut command to artnet  
+`/examples` pixelflut command generator examples  
+`/esp` nodemcu examples  
 
 ### Install Server
 Edit `config.js` to reflect your setup
