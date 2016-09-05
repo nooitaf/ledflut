@@ -1,6 +1,7 @@
 //
-var config = require('./config');
+var config = require('./config').config;
 
+console.log(config)
 var Screen = {
     cols: config.screen.cols,
     rows: config.screen.rows,
@@ -12,6 +13,17 @@ var Screen = {
 var options = {
     host: config.artnet.host
 }
+var leds = []
+for (i = 0; i < config.screen.cols * config.screen.rows; i++) {
+    if (!leds[i]) leds[i] = null
+}
+
+// poor mans renderloop
+setInterval(function(){
+  artnet.set(leds, function(err, res) {
+      if (err) console.log(err);
+  })
+},1000/15)
 
 var artnet = require('artnet')(options);
 
@@ -39,9 +51,6 @@ function updatePixelWithString(str) {
                 for (i = 0; i < leds.length; i++) {
                     if (!leds[i]) leds[i] = null
                 }
-                artnet.set(leds, function(err, res) {
-                    if (err) console.log(err);
-                })
             }
         }
         if (f === "PX") {

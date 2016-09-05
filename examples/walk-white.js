@@ -1,4 +1,4 @@
-var config = require('../config');
+var config = require('../config').config;
 
 // canvas
 var canvasWidth = config.screen.cols // width
