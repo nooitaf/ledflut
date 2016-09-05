@@ -23,7 +23,7 @@ setInterval(function(){
   artnet.set(leds, function(err, res) {
       if (err) console.log(err);
   })
-},1000/15)
+},1000/25)
 
 var artnet = require('artnet')(options);
 

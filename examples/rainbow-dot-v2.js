@@ -26,9 +26,6 @@ client.on('close', function() {
 // canvas
 var canvasWidth = config.screen.cols  // width
 var canvasHeight = config.screen.rows   // height
-var squareSize = 1
-var colorRandomFactor = 50
-var jumpFactor = 0.35 //0.95
 px = parseInt(Math.floor(Math.random() * (canvasWidth)))
 py = parseInt(Math.floor(Math.random() * (canvasHeight)))
 hue = 0
@@ -36,32 +33,38 @@ color = new Color().rgb(255,0,0);
 positions = []
 
 renderLoop = function() {
-
-    // draw square
-    for (var i = 0; i < squareSize; i++) {
-        for (var k = 0; k < squareSize; k++) {
-            var x = Math.round(px + i)
-            var y = Math.round(py + k)
-                //             PX     X         Y     BGCOLOR CHAR FGCOLOR █▓▒░┘
-            // var command = 'TX ' + x + ' ' + y + ' + ' + rr + rb + rg + '\n';
-            var command = 'PX ' + x + ' ' + y + ' ' + color.hexString().substring(1) + '\n';
-            // var command = 'PX ' + x + ' ' + y + ' FF0000  ff0000\n';
-            client.write(command);
-            positions.push([x,y]);
-        }
-    }
+    var x = px
+    var y = py
+        //             PX     X         Y     BGCOLOR CHAR FGCOLOR █▓▒░┘
+    // var command = 'TX ' + x + ' ' + y + ' + ' + rr + rb + rg + '\n';
+    var command = 'PX ' + x + ' ' + y + ' ' + color.hexString().substring(1) + '\n';
+    // var command = 'PX ' + x + ' ' + y + ' FF0000  ff0000\n';
+    client.write(command);
     // move square
-    px = px + Math.round(1 - Math.random() * 2) * squareSize * jumpFactor
-    py = py + Math.round(1 - Math.random() * 2) * squareSize * jumpFactor
+    for (var i=0; i <= 10; i++){
+      var factor = 2
+      var right = Math.round(factor/2 - Math.random() * factor)
+      var left  = Math.round(factor/2 - Math.random() * factor)
+
+      px = px + right
+      py = py + left
+      if (px !== x &&
+          py !== y &&
+          px < canvasWidth &&
+          py < canvasHeight) {
+            break;
+          }
+    }
     hue = hue+Math.random()*20-10;
     color.hue(hue)
-    if (positions.length > 20) {
+    if (positions.length > 30) {
       var pos = positions.shift()
       var command = 'PX ' + pos[0] + ' ' + pos[1] + ' ' + '000000' + '\n';
       client.write(command)
     }
-    if (px > canvasWidth + squareSize - 1) px = canvasWidth - squareSize;
-    if (py > canvasHeight) py = canvasHeight - squareSize;
+    positions.push([px,py]);
+    if (px > canvasWidth) px = canvasWidth - 1;
+    if (py > canvasHeight) py = canvasHeight - 1;
     if (px < 0) px++;
     if (py < 0) py++;
 }

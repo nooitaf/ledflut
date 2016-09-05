@@ -1,7 +1,7 @@
 var config = {};
 config.screen = {};
-config.screen.rows = 5;
 config.screen.cols = 6;
+config.screen.rows = 5;
 
 config.artnet = {};
 config.artnet.host = '10.0.0.172';
